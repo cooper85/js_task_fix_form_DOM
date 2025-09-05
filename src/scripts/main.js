@@ -17,19 +17,24 @@ function fixForm(formSelector) {
     const inputs = form.querySelectorAll(inputSelector);
 
     for (const input of inputs) {
+      const labelText =
+        input.name.charAt(0).toUpperCase() + input.name.slice(1).toLowerCase();
+
+      // handling missed id for input
+      if (!input.id) {
+        input.id = input.name + crypto.randomUUID();
+      }
+
       input.insertAdjacentHTML(
         'beforebegin',
         '<label class="field-label" for="' +
           input.id +
           '">' +
-          input.name.toUpperCase() +
+          labelText +
           '</label>',
       );
 
-      input.setAttribute(
-        'placeholder',
-        input.name.charAt(0).toUpperCase() + input.name.slice(1),
-      );
+      input.setAttribute('placeholder', labelText);
     }
   }
 }
